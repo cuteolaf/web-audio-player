@@ -3,14 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3030",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "12.1.6",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.8.0",
+    "@mui/material": "^5.8.1",
+    "@supabase/supabase-js": "^1.35.3",
+    "cors": "^2.8.5",
+    "fs": "^0.0.1-security",
+    "js-file-download": "^0.4.12",
+    "moment": "^2.29.3",
+    "multer": "^1.4.4",
+    "next": "^12.1.6",
+    "next-connect": "^0.12.2",
     "react": "18.1.0",
+    "react-audio-spectrum": "^0.1.0",
     "react-dom": "18.1.0"
   },
   "devDependencies": {
