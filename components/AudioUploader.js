@@ -15,6 +15,10 @@ export default function AudioUploader({ open, handleClose }) {
   const [audio, setAudioFile] = React.useState(null);
   const router = useRouter();
 
+  React.useEffect(() => {
+    setPath("");
+  }, [open]);
+
   const isValidInput = () => {
     return title !== "" && path !== "";
   };
