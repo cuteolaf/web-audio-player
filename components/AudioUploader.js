@@ -13,7 +13,7 @@ export default function AudioUploader({ open, handleClose }) {
   const [path, setPath] = React.useState("");
   const [isUploading, setUploading] = React.useState(false);
   const [audio, setAudioFile] = React.useState(null);
-  const { router } = useRouter();
+  const router = useRouter();
 
   const isValidInput = () => {
     return title !== "" && path !== "";
@@ -34,11 +34,12 @@ export default function AudioUploader({ open, handleClose }) {
         throw new Error(error);
       }
       setUploading(false);
-      router.replace("/");
     } catch (err) {
       window.alert("Failed to upload audio!");
+      console.log(err);
     } finally {
       handleClose();
+      router.reload(window.location.pathname);
     }
   };
   return (

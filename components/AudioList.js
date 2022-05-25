@@ -110,8 +110,6 @@ export default function AudioList({ audios }) {
                             "YYYY.MM.DD HH:mm:ss"
                           )}
                         </TableCell>
-                        {/* <TableCell>{item.filename}</TableCell>
-                      <TableCell>{"Download"}</TableCell> */}
                       </TableRow>
                     );
                   })}

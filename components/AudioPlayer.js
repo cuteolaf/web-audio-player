@@ -7,16 +7,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import AudioSepctrum from "react-audio-spectrum";
 import download from "js-file-download";
-import { UPLOAD_FOLDER } from "../lib/consts";
 
 export default function AudioPlayer({ item, open, handleClose }) {
   const [isDownloading, setDownloading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
-  const getAudioUrl = (filename) => `/${UPLOAD_FOLDER}/${filename}`;
   const handleDownload = () => {
     if (item.filename) {
       setDownloading(true);
-      fetch(getAudioUrl(item.filename))
+      fetch(item.filename)
         .then((resp) => resp.blob())
         .then(function (blob) {
           download(blob, `${item.title}.mp3`);
@@ -29,9 +28,9 @@ export default function AudioPlayer({ item, open, handleClose }) {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{item.title ?? "Title"}</DialogTitle>
-      <DialogContent>
-        {item.filename ? (
-          <div>
+      <DialogContent sx={{ minWidth: 320 }}>
+        <div>
+          <div style={{ position: "relative" }}>
             <AudioSepctrum
               id="audio-canvas"
               audioId={"audio_element"}
@@ -47,17 +46,42 @@ export default function AudioPlayer({ item, open, handleClose }) {
               gap={4}
               style={{ width: "100%" }}
             />
-            <audio
-              style={{ width: "100%" }}
-              id="audio_element"
-              src={getAudioUrl(item.filename)}
-              controls
-              controlsList="nodownload"
-            />
+            {loading && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "32px 0",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  zIndex: 100,
+                }}
+              >
+                <CircularProgress size={40} />
+              </div>
+            )}
           </div>
-        ) : (
-          <></>
-        )}
+          <audio
+            style={{ width: "100%" }}
+            id="audio_element"
+            src={item.filename}
+            controls
+            crossOrigin="anonymous"
+            controlsList="nodownload"
+            onLoadStart={() => {
+              setLoading(true);
+            }}
+            onCanPlayThrough={(e) => {
+              setLoading(false);
+            }}
+            autoPlay
+          />
+        </div>
       </DialogContent>
       <DialogActions>
         <Button
